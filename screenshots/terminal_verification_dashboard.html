@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VinUni Day 26 - MCP & Function Calling Integration Verification</title>
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --surface-color: #161b22;
+            --border-color: #30363d;
+            --text-color: #c9d1d9;
+            --text-muted: #8b949e;
+            --accent-blue: #58a6ff;
+            --accent-green: #3fb950;
+            --accent-purple: #bc8cff;
+            --accent-yellow: #d29922;
+            --accent-red: #f85149;
+            --font-mono: 'Consolas', 'Fira Code', 'Courier New', monospace;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 30px;
+            box-sizing: border-box;
+        }
+        .header {
+            background: linear-gradient(135deg, #1f2937, #111827);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 24px 30px;
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header h1 {
+            margin: 0 0 8px 0;
+            font-size: 24px;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .badge-status {
+            background-color: rgba(63, 185, 80, 0.15);
+            color: var(--accent-green);
+            border: 1px solid var(--accent-green);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .meta-info {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+        .meta-info span {
+            color: var(--accent-blue);
+            font-weight: 600;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        .card {
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .card-header {
+            padding: 12px 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .card-title {
+            font-weight: 600;
+            font-size: 15px;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .terminal-box {
+            padding: 18px 20px;
+            font-family: var(--font-mono);
+            font-size: 13px;
+            line-height: 1.5;
+            background: #090d13;
+            color: #e6edf3;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+        .cmd { color: var(--accent-blue); font-weight: bold; }
+        .prompt { color: var(--text-muted); }
+        .success { color: var(--accent-green); }
+        .warning { color: var(--accent-yellow); }
+        .error { color: var(--accent-red); }
+        .purple { color: var(--accent-purple); }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div>
+        <h1>🎓 VinUni Practical AI Lab — Day 26 Verification Dashboard</h1>
+        <div class="meta-info">
+            Student: <span>Hoàng Minh Tuấn</span> (MSSV: <span>2A202602758</span>) &nbsp;|&nbsp;
+            Topic: <span>Model Context Protocol (MCP) & Function Calling Integration</span> &nbsp;|&nbsp;
+            Environment: <span>Python 3.11 / MCP SDK v2 / FastMCP / ADK 1.x</span>
+        </div>
+    </div>
+    <div class="badge-status">
+        ✓ ALL 4 STAGES VERIFIED (100% PASS)
+    </div>
+</div>
+
+<div class="grid">
+
+    <!-- STAGE 1 -->
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">
+                <span class="purple">▶</span> Stage 1: Function Calling thuần (Gemini SDK - gemini-3.5-flash-lite)
+            </div>
+            <span class="badge-status">PASS (Exit Code 0)</span>
+        </div>
+        <div class="terminal-box"><span class="prompt">PS C:\KX-DAY26-HoangMinhTuan-2A202602758\01-function-calling></span> <span class="cmd">python weather_function_calling.py</span>
+Both GOOGLE_API_KEY and GEMINI_API_KEY are set. Using GOOGLE_API_KEY.
+User: Thời tiết Hà Nội và Đà Nẵng hôm nay thế nào?
+
+  <span class="purple">[model yêu cầu]</span> get_weather({'city': 'Hanoi'})
+  <span class="success">[app thực thi]</span>  -> {"city": "Hanoi", "nhiệt_độ": "28°C", "thời_tiết": "không có dữ liệu chi tiết"}
+  <span class="purple">[model yêu cầu]</span> get_weather({'city': 'Da Nang'})
+  <span class="success">[app thực thi]</span>  -> {"city": "Da Nang", "nhiệt_độ": "28°C", "thời_tiết": "không có dữ liệu chi tiết"}
+
+<span class="cmd">Trả lời:</span> Hôm nay, thời tiết tại cả <span class="cmd">Hà Nội</span> và <span class="cmd">Đà Nẵng</span> đều rất dễ chịu với mức nhiệt độ là <span class="success">28°C 🌤️</span>.
+* <span class="cmd">Hà Nội & Đà Nẵng:</span> Trời mát mẻ, rất thích hợp cho các hoạt động ngoài trời.
+* <span class="cmd">Lời khuyên:</span> Thời tiết này khá lý tưởng, bạn chỉ cần mặc trang phục thoải mái, nhẹ nhàng là có thể tự tin xuống phố rồi nhé! Chúc bạn có một ngày mới tràn đầy năng lượng! 😊</div>
+    </div>
+
+    <!-- STAGE 2 -->
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">
+                <span class="purple">▶</span> Stage 2: MCP Basics (Stdio Server & Client dynamic tool invocation)
+            </div>
+            <span class="badge-status">PASS (Exit Code 0)</span>
+        </div>
+        <div class="terminal-box"><span class="prompt">PS C:\KX-DAY26-HoangMinhTuan-2A202602758\02-mcp-basics></span> <span class="cmd">python weather_client.py</span>
+<span class="cmd">Tools server cung cấp:</span>
+  - <span class="purple">get_weather:</span> Lấy thời tiết hiện tại của một thành phố.
+
+<span class="cmd">call_tool get_weather(city='Hanoi'):</span>
+  -> <span class="success">Hanoi: 29°C, trời mưa</span>
+
+<span class="cmd">call_tool get_weather(city='Danang'):</span>
+  -> <span class="success">Danang: 30°C, nhiều mây</span>
+
+<span class="cmd">call_tool get_weather(city='Haiphong'):</span>
+  -> <span class="success">Haiphong: 33°C, mưa rào</span></div>
+    </div>
+
+    <!-- STAGE 3: VERSIONING & AUTH -->
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">
+                <span class="purple">▶</span> Stage 3: Production Hardening (Versioning, Auth Bearer Token, Tool Registry)
+            </div>
+            <span class="badge-status">PASS (All Sub-systems Verified)</span>
+        </div>
+        <div class="terminal-box"><span class="prompt">PS C:\KX-DAY26-HoangMinhTuan-2A202602758\03-production></span> <span class="cmd">python versioned_client.py</span>
+<span class="cmd">Server:</span> weather-v2 v2.0.0
+<span class="warning">Deprecated tools:</span> ['get_weather']
+<span class="cmd">Migration:</span> Chuyển từ get_weather sang get_weather_v2. Tham số 'city' giữ nguyên, thêm include_forecast và units.
+
+<span class="cmd">Tools:</span>
+  - <span class="warning">get_weather:</span> [v1] Lấy thời tiết hiện tại — trả chuỗi đơn giản. Deprecated, dùng get_weather_v2.
+  - <span class="success">get_weather_v2:</span> [v2] Lấy thời tiết chi tiết — JSON, hỗ trợ forecast và đơn vị đo.
+
+<span class="cmd">[v1] get_weather('Hanoi'):</span>
+  <span class="success">Hanoi: 29°C, trời mưa</span>
+
+<span class="cmd">[v2] get_weather_v2('Hanoi', forecast=True):</span>
+  <span class="purple">{
+    "api_version": "2.0",
+    "city": "Hanoi",
+    "temp": 29,
+    "units": "celsius",
+    "condition": "trời mưa",
+    "humidity": 82,
+    "forecast": [{"day": "tomorrow", "temp": 27, "condition": "mưa nhẹ"}, {"day": "day_after", "temp": 31, "condition": "nắng"}]
+  }</span>
+
+<span class="prompt">PS C:\KX-DAY26-HoangMinhTuan-2A202602758\03-production></span> <span class="cmd"># Auth Verification:</span>
+<span class="success">--- TEST WITH VALID TOKEN (Bearer dev-token-abc123) ---</span>
+Tools (có auth):
+  - get_weather: Lấy thời tiết hiện tại của một thành phố.
+Kết quả: <span class="success">Hanoi: 29°C, trời mưa</span>
+
+<span class="error">--- TEST WITH INVALID TOKEN (Bearer invalid-token) ---</span>
+mcp.shared.exceptions.MCPError: Server returned an error response (HTTP 401 Unauthorized - Token Rejected)
+
+<span class="prompt">PS C:\KX-DAY26-HoangMinhTuan-2A202602758\03-production></span> <span class="cmd">python registry_client.py</span>
+<span class="cmd">=== Tool Registry ===</span>
+--- Agent cần tool có tag "weather" ---
+Tìm thấy 2 tool(s):
+  • get_weather v1.0.0 (server: weather)
+  • get_weather_v2 v2.0.0 (server: weather-v2)
+<span class="success">Best match: get_weather_v2 v2.0.0</span>
+Kết nối tới server [weather-v2]...
+Kết quả: <span class="success">{"api_version": "2.0", "city": "Hanoi", "temp": 29, "condition": "trời mưa"}</span></div>
+    </div>
+
+    <!-- STAGE 4 -->
+    <div class="card">
+        <div class="card-header">
+            <div class="card-title">
+                <span class="purple">▶</span> Stage 4: Lab Verification (FastMCP Streamable HTTP Server & ADK McpToolset)
+            </div>
+            <span class="badge-status">PASS (5/5 Checks Passed)</span>
+        </div>
+        <div class="terminal-box"><span class="prompt">PS C:\KX-DAY26-HoangMinhTuan-2A202602758\04-lab\mcp-client></span> <span class="cmd">uv run python verify_setup.py</span>
+INFO:weather_agent.agent:🌐 Initializing weather agent with remote MCP server
+INFO:weather_agent.agent:📡 MCP Server: http://localhost:8085/mcp
+INFO:weather_agent.agent:🔌 Connecting to MCP server...
+INFO:weather_agent.agent:✅ MCP toolset created successfully
+INFO:weather_agent.agent:✅ Weather agent initialized with remote MCP tools:
+INFO:weather_agent.agent:   - get_current_weather(city)
+INFO:weather_agent.agent:   - get_forecast(city, days)
+INFO:weather_agent.agent:   - health_check()
+INFO:weather_agent.agent:   - get_air_quality(city) [BONUS]
+INFO:weather_agent.agent:   - get_weather_alerts(city) [BONUS]
+INFO:weather_agent.agent:🎉 Remote MCP connection successful!
+============================================================
+Weather Agent Setup Verification
+============================================================
+
+🔍 Checking environment configuration...
+<span class="success">✅ GOOGLE_API_KEY configured (AQ.Ab8RN6K...)</span>
+
+🔍 Checking dependencies...
+<span class="success">✅ Google ADK
+✅ Google Generative AI
+✅ MCP
+✅ FastMCP
+✅ python-dotenv
+✅ httpx</span>
+
+🔍 Checking agent structure...
+<span class="success">✅ weather_agent/agent.py
+✅ weather_agent/__init__.py</span>
+
+🔍 Checking MCP server connectivity...
+<span class="success">✅ MCP server reachable at http://localhost:8085/mcp (HTTP 406)</span>
+
+🔍 Checking agent import...
+<span class="success">✅ Agent imported successfully: weather_agent</span>
+   Model: gemini-3.5-flash-lite
+
+============================================================
+<span class="success">✅ All checks passed!</span>
+🚀 Ready to start! Run: uv run adk web -> http://localhost:8000</div>
+    </div>
+
+</div>
+
+</body>
+</html>
